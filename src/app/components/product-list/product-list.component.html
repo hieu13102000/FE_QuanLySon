@@ -1,0 +1,69 @@
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="./">Nhà</a></li>
+      <li class="breadcrumb-item">Danh sách</li>
+      <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+    </ol>
+  </div>
+
+  <!-- Row -->
+  <div class="row">
+<div class="col-lg-12">
+  <div class="card mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Số lượng danh sách:
+        <select (change)="handlePageSizeChange($event)">
+          <option *ngFor="let size of pageSizes" [ngValue]="size">
+            {{ size }}
+          </option>
+        </select></h6>
+      <label><input type="search" class="form-control form-control-sm" placeholder="tìm kiếm"  [(ngModel)]="name" (ngModelChange)="Search()" aria-controls="dataTable"></label>
+    </div>
+    <div class="table align-items-center table-flush table-hover" id="dataTableHover">
+      <div class="row row-cols-3 thead-light">
+        <div class="col-2">Hình ảnh</div>
+        <div class="col-3">Tên sản phẩm</div>
+        <div class="col-2">Thương hiệu</div>
+        <div class="col-1">Loại</div>
+        <div class="col-2">Xuất sứ</div>
+        <div class="col-2" (click)="sort('price')">Giá <i class ="fa fa-sort"></i></div>
+      </div>
+      <ng-container>
+      <div class="row row-cols-auto"  *ngFor="
+      let product of products |orderBy :key : reverse | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+      };
+    "data-toggle="modal" data-target="#exampleModal">
+        <div class="col-2"><img src="{{ product.img }}" alt="" height=50 width=50></div>
+        <div class="col-3">{{ product.name }}</div>
+        <div class="col-2">{{ product.brand }}</div>
+        <div class="col-1">{{ product.color }}</div>
+        <div class="col-1">{{ product.made_in }}</div>
+        <div class="col-3">
+          <div class="row edit">
+          <div class="col">{{ product.price}} đ</div>
+          <div class="col"><button type="button" [routerLink]="['/productDetails',product._id]"class="btn btn-warning"><i class="far fa-edit"></i>Sửa</button></div>
+          </div></div>  
+      </div>
+      </ng-container>
+      <div class="row row-cols-auto back">
+        <div class="col-12  d-flex align-items-center justify-content-center" style="height: 60px;">
+        <pagination-controls
+            previousLabel="Trước"
+            nextLabel="Sau"
+            [responsive]="true"
+            (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,156 @@
+<div class="container">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thêm sản phẩm</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="./">Nhà</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+    </ol>
+  </div>
+
+  <div class="main-body">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src ="/assets/img/add img"alt="Admin" class="rounded" width="300">
+              <div class="mt-3">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <button type="button" class="btn btn-success mb-1" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      Chọn</button>
+                  </div>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      <div class="row mb-3">
+                        <div class="col-sm-4">
+                          <h6 class="mb-0">Link ảnh</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                          <input type="text" class="form-control" placeholder="Nhập link ảnh" 
+                          id="img"
+                          required
+                          [(ngModel)]="product.img"
+                          name="img"     >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Tên sản phẩm</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" 
+                id="name"
+                required
+                [(ngModel)]="product.name"
+                name="name"     >
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Thương hiệu </h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <select class="form-control" aria-label="Default select example" id="brand"
+                required
+                [(ngModel)]="product.brand"
+                name="brand">
+                  <option selected >Chọn thương hiệu</option>
+                  <option >Chanel</option>
+                  <option >Gucci</option>
+                  <option>Dior</option>
+                  <option>YSl</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Xuất sứ</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <select class="form-control" aria-label="Default select example" id="made_in"
+                required
+                [(ngModel)]="product.made_in"
+                name="made_in">
+                  <option selected > Chọn xuất sứ</option>
+                  <option >Pháp</option>
+                  <option >Ý</option>
+                  <option >Anh</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Màu sắc</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <select class="form-control"   id="color"
+                required
+                [(ngModel)]="product.color"
+                name="color">
+                  <option selected >  Chọn màu sắc</option>
+                  <option>Cam</option>
+                  <option>Hồng nhạt</option>
+                  <option>Hồng đỏ đất</option>
+                  <option>Cam</option>
+                  <option>Hồng</option>
+                  <option>Đỏ đất</option>
+                  <option>Đỏ</option>
+                 </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Giá sản phẩm</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" placeholder="Nhập giá sản phẩm"
+                id="price"
+                required
+                [(ngModel)]="product.price"
+                name="price">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Giá sản phẩm giảm giá</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" placeholder="Nhập sản phẩm giảm giá" id="old_price"
+                required
+                [(ngModel)]="product.old_price"
+                name="old_price" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                <input type="button" class="btn btn-primary px-4" value="Lưu"  (click)="saveProduct()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

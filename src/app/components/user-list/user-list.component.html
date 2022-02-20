@@ -1,0 +1,61 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Danh sách tài khoản</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./">Nhà</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Danh sách tài khoản</li>
+      </ol>
+    </div>
+  
+    <!-- Row -->
+    <div class="row">
+  <div class="col-lg-12">
+    <div class="card mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Số lượng danh sách:
+          <select (change)="handlePageSizeChange($event)">
+            <option *ngFor="let size of pageSizes" [ngValue]="size">
+              {{ size }}
+            </option>
+          </select></h6>
+        <label><input type="search" class="form-control form-control-sm" placeholder="tìm kiếm"  [(ngModel)]="username" (ngModelChange)="Search()" aria-controls="dataTable"></label>
+      </div>
+      <div class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <div class="row row-cols-3 thead-light">
+          <div class="col-1">STT</div>
+          <div class="col-3"(click)="sort('username')">Tên tài khoản <i class ="fa fa-sort"></i></div>
+          <div class="col-3">Mật khẩu</div>
+          <div class="col-3">Email</div>
+          <div class="col-2">Trạng thái</div>
+        </div>
+        <ng-container>
+        <div class="row row-cols-auto"  *ngFor="
+        let user of users |orderBy :key : reverse | paginate : {
+          itemsPerPage: pageSize,
+          currentPage: page,
+          totalItems: count
+        };
+      ">
+          <div class="col-1">{{user.id}}</div>
+          <div class="col-3">{{ user.username}}</div>
+          <div class="col-3">{{ user.password}}</div>  
+          <div class="col-3">{{ user.email}}</div> 
+          <div class="col-2">
+            <ui-switch [checked]="user.published"></ui-switch>
+          </div>
+        </div>
+        </ng-container>
+        <div class="row row-cols-auto back">
+          <div class="col-12  d-flex align-items-center justify-content-center" style="height: 60px;">
+          <pagination-controls
+              previousLabel="Trước"
+              nextLabel="Sau"
+              [responsive]="true"
+              (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
