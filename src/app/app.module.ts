@@ -17,6 +17,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     Ng2OrderModule,
-    UiSwitchModule
+    UiSwitchModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

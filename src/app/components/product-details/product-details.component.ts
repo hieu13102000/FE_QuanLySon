@@ -38,7 +38,6 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.currentProduct = data;
-          console.log(data);
         },
         error => {
           console.log(error);
@@ -46,20 +45,18 @@ export class ProductDetailsComponent implements OnInit {
   }
   updateProduct(): void {
     Swal.fire({
-      title: 'Bạn có muốn lưu thay đổi ?',
-      // showDenyButton: true,
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Lưu',
-      cancelButtonText: `Huỷ`,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Saved!', '', 'success')
+        Swal.fire('Đã lưu!', '', 'success')
         this.productService.update(this.currentProduct._id, this.currentProduct)
         .subscribe(
           response => {
-            console.log(response);
-    
             this.router.navigate(['/productList']);
           },
           error => {

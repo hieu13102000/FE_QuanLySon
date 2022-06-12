@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Product } from 'src/app/models/product.model';
+import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+
 
 @Component({
   selector: 'app-add-product',
@@ -9,6 +17,9 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+  form!: FormGroup;
+  submitted = false;
+
   product: Product = {
     name: '',
     discount: '',
@@ -18,44 +29,75 @@ export class AddProductComponent implements OnInit {
     brand: '',
     img: '',
   };
-  submitted = false;
+  // submitted = false;
 
-  constructor(private productService: ProductService) { }
+  constructor(private formBuilder: FormBuilder, private productService: ProductService,
+    private router: Router) { }
 
   ngOnInit(): void {
-  }
-  
-  saveProduct(): void {
-    const data = {
-      name: this.product.name,
-      price: this.product.price,
-      old_price: this.product.old_price,
-      discount: this.product.discount,
-      gender: this.product.gender,
-      color: this.product.color,
-      made_in: this.product.made_in,
-      brand: this.product.brand,
-      img: this.product.img,
-    };
+    const numberRegEx = /\-?\d*\.?\d{1,2}/;
+    this.form = this.formBuilder.group(
+      {
+        name: ['', Validators.required],
+        price: ['', [
+          Validators.required,
+          Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]],
+        old_price: ['', [
+          Validators.required,
+          Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+        ]],
+        color: ['', Validators.required],
+        made_in: ['', Validators.required],
+        brand: ['', Validators.required],
+        img: ['', Validators.required],
+      },
 
-    this.productService.create(data)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.submitted = true;
-          // thông báo
-          Swal.fire({
-            icon: 'success',
-            title: 'Thêm sản phẩm thành công',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          this.newProduct();
-        },
-        error => {
-          console.log(error);
-        });
+    );
   }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+    if ((this.form.value.name && this.form.value.price && this.form.value.old_price &&
+      this.form.value.color && this.form.value.made_in && this.form.value.brand !== "") &&
+      isNaN(this.form.value.price) === false && isNaN(this.form.value.old_price) === false) {
+      const data = {
+        name: this.form.value.name,
+        price: this.form.value.price,
+        old_price: this.form.value.old_price,
+        discount: "this.form.value.discount",
+        gender: "this.form.value.gender",
+        color: this.form.value.color,
+        made_in: this.form.value.made_in,
+        brand: this.form.value.brand,
+        img: this.form.value.img,
+      };
+
+      this.productService.create(data)
+        .subscribe(
+          response => {
+            this.submitted = true;
+            // thông báo
+            Swal.fire({
+              icon: 'success',
+              title: 'Thêm sản phẩm thành công',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.newProduct();
+            this.router.navigate(['/productList']);
+          },
+          error => {
+            alert("Thêm sản phẩm thất bại")
+          });
+    }
+
+  }
+
 
   newProduct(): void {
     this.submitted = false;

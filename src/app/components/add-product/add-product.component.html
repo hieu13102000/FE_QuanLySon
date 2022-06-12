@@ -8,6 +8,7 @@
   </div>
 
   <div class="main-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-lg-4">
         <div class="card">
@@ -29,9 +30,9 @@
                         <div class="col-sm-8 text-secondary">
                           <input type="text" class="form-control" placeholder="Nhập link ảnh" 
                           id="img"
+                          name="img" 
                           required
-                          [(ngModel)]="product.img"
-                          name="img"     >
+                          formControlName="img"    >
                         </div>
                       </div>
                     </div>
@@ -51,10 +52,12 @@
               </div>
               <div class="col-sm-9 text-secondary">
                 <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" 
-                id="name"
-                required
-                [(ngModel)]="product.name"
-                name="name">
+                name="name"
+                formControlName="name"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Vui lòng nhập tên sản phẩm</div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -63,15 +66,18 @@
               </div>
               <div class="col-sm-9 text-secondary">
                 <select class="form-control" aria-label="Default select example" id="brand"
-                required
-                [(ngModel)]="product.brand"
-                name="brand">
-                  <option selected >Chọn thương hiệu</option>
+                name="brand"
+                formControlName="brand"
+                [ngClass]="{ 'is-invalid': submitted && f.brand.errors }">
+                  <option value="" disabled selected>Chọn thương hiệu</option>
                   <option >Chanel</option>
                   <option >Gucci</option>
                   <option>Dior</option>
                   <option>YSl</option>
                 </select>
+                <div *ngIf="submitted && f.brand.errors" class="invalid-feedback">
+                  <div *ngIf="f.brand.errors.required">Vui lòng chọn thương hiệu</div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -80,14 +86,17 @@
               </div>
               <div class="col-sm-9 text-secondary">
                 <select class="form-control" aria-label="Default select example" id="made_in"
-                required
-                [(ngModel)]="product.made_in"
-                name="made_in">
-                  <option selected > Chọn xuất sứ</option>
+                name="made_in"
+                formControlName="made_in"
+                [ngClass]="{ 'is-invalid': submitted && f.made_in.errors }">
+                  <option value=""  disabled selected> Chọn xuất sứ</option>
                   <option >Pháp</option>
                   <option >Ý</option>
                   <option >Anh</option>
                 </select>
+                <div *ngIf="submitted && f.made_in.errors" class="invalid-feedback">
+                  <div *ngIf="f.made_in.errors.required">Vui lòng chọn xuất sứ</div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -95,11 +104,11 @@
                 <h6 class="mb-0">Màu sắc</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <select class="form-control"   id="color"
-                required
-                [(ngModel)]="product.color"
-                name="color">
-                  <option selected >  Chọn màu sắc</option>
+                <select class="form-control"
+                name="color"
+                formControlName="color"
+                [ngClass]="{ 'is-invalid': submitted && f.color.errors }">
+                  <option value=""  disabled selected>Chọn màu sắc</option>
                   <option>Cam</option>
                   <option>Hồng nhạt</option>
                   <option>Hồng đỏ đất</option>
@@ -108,6 +117,9 @@
                   <option>Đỏ đất</option>
                   <option>Đỏ</option>
                  </select>
+                 <div *ngIf="submitted && f.color.errors" class="invalid-feedback">
+                  <div *ngIf="f.color.errors.required">Vui lòng chọn màu sắc</div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -117,9 +129,13 @@
               <div class="col-sm-9 text-secondary">
                 <input type="text" class="form-control" placeholder="Nhập giá sản phẩm"
                 id="price"
-                required
-                [(ngModel)]="product.price"
-                name="price">
+                name="price"
+                formControlName="price"
+                [ngClass]="{ 'is-invalid': submitted && f.price.errors }">
+                <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                  <div *ngIf="f.price.errors.required">Vui lòng nhập giá sản phẩm</div>
+                  <div *ngIf="f.price.errors.pattern"> giá sản phẩm phải là số</div>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -128,23 +144,33 @@
               </div>
               <div class="col-sm-9 text-secondary">
                 <input type="text" class="form-control" placeholder="Nhập sản phẩm giảm giá" id="old_price"
-                required
-                [(ngModel)]="product.old_price"
-                name="old_price" >
+                name="old_price"
+                formControlName="old_price"
+                [ngClass]="{ 'is-invalid': submitted && f.old_price.errors }">
+                <div *ngIf="submitted && f.old_price.errors" class="invalid-feedback">
+                  <div *ngIf="f.old_price.errors.required">Vui lòng nhập giá  giảm sản phẩm</div>
+                  <div *ngIf="f.old_price.errors.pattern"> giá sản phẩm giảm giá phải là số</div>
+                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3"></div>
               <div class="col-sm-9 text-secondary">
-                <input type="button" class="btn btn-primary px-4" value="Lưu"  (click)="saveProduct()">
+                <!-- <input type="button" class="btn btn-primary px-4" value="Lưu"  (click)="saveProduct()"> -->
+                <button type="submit" class="btn btn-primary px-4">Lưu</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </form>
   </div>
 </div>
+
+
+
+
 
 
 
