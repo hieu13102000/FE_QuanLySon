@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
@@ -44,28 +45,61 @@ export class ProductDetailsComponent implements OnInit {
         });
   }
   updateProduct(): void {
-    this.productService.update(this.currentProduct._id, this.currentProduct)
-      .subscribe(
-        response => {
-          console.log(response);
-          window.alert('Đã cập nhật thành công!');
-          this.router.navigate(['/productList']);
-        },
-        error => {
-          console.log(error);
-        });
+    Swal.fire({
+      title: 'Bạn có muốn lưu thay đổi ?',
+      // showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Lưu',
+      cancelButtonText: `Huỷ`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success')
+        this.productService.update(this.currentProduct._id, this.currentProduct)
+        .subscribe(
+          response => {
+            console.log(response);
+    
+            this.router.navigate(['/productList']);
+          },
+          error => {
+            console.log(error);
+          });
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
   }
 
+  
   deleteProduct(): void {
-    this.productService.delete(this.currentProduct._id)
-      .subscribe(
-        response => {
-          console.log(response);
-          window.alert('Đã xoá thành công!');
-          this.router.navigate(['/productList']);
-        },
-        error => {
-          console.log(error);
-        });
+    Swal.fire({
+      title: 'Bạn có chắc không?',
+      text: "Bạn sẽ không thể hoàn nguyên điều này!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Vâng tôi chắc!',
+      cancelButtonText:'Huỷ'
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Xoá thành công',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.productService.delete(this.currentProduct._id)
+        .subscribe(
+          response => {
+            this.router.navigate(['/productList']);
+          },
+          error => {
+            console.log(error);
+          });
+      }
+    })
   }
 }

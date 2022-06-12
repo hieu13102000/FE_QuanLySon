@@ -26,6 +26,7 @@
     "ngx-pagination": "^5.1.1",
     "ngx-ui-switch": "^12.0.1",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^11.4.14",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },

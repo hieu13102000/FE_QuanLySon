@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -23,7 +24,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
   saveProduct(): void {
     const data = {
       name: this.product.name,
@@ -42,7 +43,13 @@ export class AddProductComponent implements OnInit {
         response => {
           console.log(response);
           this.submitted = true;
-          window.alert('Đã thêm thành công!');
+          // thông báo
+          Swal.fire({
+            icon: 'success',
+            title: 'Thêm sản phẩm thành công',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.newProduct();
         },
         error => {
