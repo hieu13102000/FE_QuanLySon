@@ -47,7 +47,6 @@ submitted = false;
     private router: Router) { }
 
   ngOnInit(): void {
-    this.message = '';
     this.productService.seachProduct(this.route.snapshot.params['_id'])
       .subscribe(
         data => {
@@ -105,7 +104,7 @@ submitted = false;
             console.log(error);
           });
       } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info')
+        Swal.fire('Lưu không thay đổi', '', 'info')
       }
     })
   }
