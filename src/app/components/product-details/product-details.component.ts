@@ -3,6 +3,13 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
@@ -10,6 +17,16 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
+  form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(''),
+    old_price: new FormControl(''),
+    color: new FormControl(''),
+    made_in: new FormControl(''),
+    brand: new FormControl(''),
+    img: new FormControl(''),
+});
+submitted = false;
   currentProduct: Product = {
     name: '',
     price: 0,
@@ -25,36 +42,61 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
     this.message = '';
-    this.getProduct(this.route.snapshot.params['_id']);
-  }
-
-  getProduct(_id: any): void {
-    this.productService.seachProduct(_id)
+    this.productService.seachProduct(this.route.snapshot.params['_id'])
       .subscribe(
         data => {
           this.currentProduct = data;
+          this.form = this.formBuilder.group(
+            {
+              name: [this.currentProduct.name, Validators.required],
+              price: [this.currentProduct.price, [
+                Validators.required,
+                Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+              ]],
+              old_price: [this.currentProduct.old_price, [
+                Validators.required,
+                Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+              ]],
+              color: [this.currentProduct.color, Validators.required],
+              made_in: [this.currentProduct.made_in, Validators.required],
+              brand: [this.currentProduct.brand, Validators.required],
+              img: [this.currentProduct.img, Validators.required],
+            },
+          );
         },
         error => {
           console.log(error);
         });
+  
   }
-  updateProduct(): void {
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
+  }
+  
+  updateProduct(){
+    this.submitted = true;
+    //  Điều kiện check nếu tất cả giá trị hợp lệ thì thêm sp
+      if (this.form.invalid) {
+        return;
+      }
+      
     Swal.fire({
-      title: 'Do you want to save the changes?',
+      title: 'Bạn có muốn lưu sự thay đổi?',
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Save',
-      denyButtonText: `Don't save`,
+      confirmButtonText: 'Lưu',
+      denyButtonText: `không lưu`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire('Đã lưu!', '', 'success')
-        this.productService.update(this.currentProduct._id, this.currentProduct)
+        this.productService.update(this.currentProduct._id, this.form.value)
         .subscribe(
           response => {
             this.router.navigate(['/productList']);

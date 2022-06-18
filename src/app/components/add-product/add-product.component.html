@@ -14,7 +14,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
-              <img src ="/assets/img/add img"alt="Admin" class="rounded" width="300">
+              <img src ="/assets/img/add.img"alt="Admin" class="rounded" width="300">
               <div class="mt-3">
                 <div class="row">
                   <div class="col-sm-12">
@@ -55,7 +55,7 @@
                 name="name"
                 formControlName="name"
                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
-                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
                   <div *ngIf="f.name.errors.required">Vui lòng nhập tên sản phẩm</div>
                 </div>
               </div>
@@ -156,7 +156,6 @@
             <div class="row">
               <div class="col-sm-3"></div>
               <div class="col-sm-9 text-secondary">
-                <!-- <input type="button" class="btn btn-primary px-4" value="Lưu"  (click)="saveProduct()"> -->
                 <button type="submit" class="btn btn-primary px-4">Lưu</button>
               </div>
             </div>
@@ -180,3 +179,119 @@
 
 
 
+
+<!-- 
+ <div class="register-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Full Name</label>
+      <input
+        type="text"
+        formControlName="name"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+      />
+      <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+        <div *ngIf="f['name'].errors['required']">Fullname is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label> price</label>
+      <input
+        type="text"
+        formControlName="price"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['price'].errors }"
+      />
+      <div *ngIf="submitted && f['price'].errors" class="invalid-feedback">
+        <div *ngIf="f['price'].errors['required']">Username is required</div>
+        <div *ngIf="f['price'].errors['price']">
+          Username must be at least 6 characters
+        </div>
+        <div *ngIf="f['price'].errors['price']">
+          Username must not exceed 20 characters
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>color</label>
+      <input
+        type="text"
+        formControlName="color"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['color'].errors }"
+      />
+      <div *ngIf="submitted && f['color'].errors" class="invalid-feedback">
+        <div *ngIf="f['color'].errors['required']">Email is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>made_in</label>
+      <input
+        type="text"
+        formControlName="made_in"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['made_in'].errors }"
+      />
+      <div *ngIf="submitted && f['made_in'].errors" class="invalid-feedback">
+        <div *ngIf="f['made_in'].errors['required']">Fullname is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>old_price</label>
+      <input
+        type="text"
+        formControlName="old_price"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['old_price'].errors }"
+      />
+      <div *ngIf="submitted && f['old_price'].errors" class="invalid-feedback">
+        <div *ngIf="f['old_price'].errors['required']">Username is required</div>
+        <div *ngIf="f['old_price'].errors['minlength']">
+          Username must be at least 6 characters
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>img</label>
+      <input
+        type="text"
+        formControlName="img"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['img'].errors }"
+      />
+      <div *ngIf="submitted && f['img'].errors" class="invalid-feedback">
+        <div *ngIf="f['img'].errors['required']">Email is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>brand</label>
+      <select class="form-control"
+      formControlName="brand"
+    >
+        <option value=""  disabled selected>Chọn màu sắc</option>
+        <option>Cam</option>
+        <option>Hồng nhạt</option>
+        <option>Hồng đỏ đất</option>
+        <option>Cam</option>
+        <option>Hồng</option>
+        <option>Đỏ đất</option>
+        <option>Đỏ</option>
+       </select>
+      <div *ngIf="submitted && f['brand'].errors" class="invalid-feedback">
+        <div *ngIf="f['brand'].errors['required']">Email is required</div>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+  </form>
+</div> -->
